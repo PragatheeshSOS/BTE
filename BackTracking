@@ -1,0 +1,42 @@
+//Backtracking...
+
+import java.util.Scanner;
+public class Main{
+    public static boolean backtrack(int[][] res,int[][] graph,int r,int c,int n){
+        if(r==n-1 && c==n-1 && graph[r][c]==0 && res[r][c]==0){
+            res[r][c] = 1;
+            return true;
+        }
+        if(r>=0 && r<n && c>=0 && c<n && graph[r][c]==0 && res[r][c]==0){
+            res[r][c] = 1;
+            if(backtrack(res,graph,r+1,c,n)) return true;
+            if(backtrack(res,graph,r,c+1,n)) return true;
+            res[r][c] = 0;
+            return false;
+        }
+        return false;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] graph = new int[n][n];
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                graph[i][j] = sc.nextInt();
+            }
+        }
+        int[][] res = new int[n][n];
+        backtrack(res,graph,0,0,n);
+        if(res[n-1][n-1]==1){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<n;j++){
+                    System.out.print(res[i][j]+" ");
+                }
+                System.out.println();
+            }
+        }
+        else{
+            System.out.println("No solution exists");
+        }
+    }
+}
